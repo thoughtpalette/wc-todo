@@ -10,6 +10,9 @@ import './add-todo'
 @customElement('app-container')
 @install(config)
 export class AppContainer extends LitElement {
+    /**
+     * Preset list of Todos.
+     */
     @property() todos = new Map([
         [ crypto.randomUUID(), { title: 'Clean car', completed: false, isEditing: false} ],
         [ crypto.randomUUID(), { title: 'Go for a walk', completed: false, isEditing: false} ],
@@ -34,6 +37,11 @@ export class AppContainer extends LitElement {
         this.requestUpdate();        
     }
 
+    /**
+     * Removes a Todo by it's id.
+     * 
+     * @param event CustomEvent
+     */
     onRemoveTodo(event: CustomEvent) {
         // Make copy
         const copy = new Map(this.todos);
