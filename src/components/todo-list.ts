@@ -6,11 +6,19 @@ import config from '../../twind.config'
 @customElement('todo-list')
 @install(config)
 class TodoList extends LitElement {
-    @property() todos = [{ id: crypto.randomUUID(), title: 'this is a todo', completed: false }]
+    @property() todos = [{ id: 0, title: "" }]
 
     override render() {
         return html`
-                <p>${this.todos.map(todo => todo.title)}<p>
+                <ul class="list-none font-sans">
+                    ${this.todos.map((todo, index) => {
+                        const isLastChild = index === this.todos.length - 1;
+
+                        return html`<li class="py-2 ${!isLastChild ? "border-b" : ""}" data-id="${todo.id}">${todo.title}</li>`
+                    })}
+                <ul>
         `
     }
 }
+
+export default TodoList
