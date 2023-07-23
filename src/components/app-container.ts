@@ -34,6 +34,17 @@ export class AppContainer extends LitElement {
         this.requestUpdate();        
     }
 
+    onRemoveTodo(event: CustomEvent) {
+        // Make copy
+        const copy = new Map(this.todos);
+        // Delete from copy       
+        copy.delete(event.detail.id);
+        // Update property with new reference.
+        this.todos = copy;
+        // Trigger component refresh since data changed.
+        this.requestUpdate();        
+    }
+
 
     /**
      * Adds a blank Todo Item to List.
@@ -53,8 +64,8 @@ export class AppContainer extends LitElement {
         return html`
             <main class="mx-auto max-w-screen-sm p-6 shadow-md border border-solid rounded-md border-slate-300 mt-8">
                 <h1 class="text-2xl font-sans border-b border-solid border-slate-500">Todos</h1>
-                <todo-list .todos=${this.todos} @create-new-todo=${this.onCreateNewTodo}></todo-list>
-                <add-todo @add-blank-todo=${this.onAddBlankTodo}></add-todo>
+                <todo-list .todos=${this.todos} @create-new-todo=${this.onCreateNewTodo} @remove-todo=${this.onRemoveTodo}></todo-list>
+                <add-todo @add-blank-todo=${() => this.onAddBlankTodo()}></add-todo>
             </main>
         `
     }
