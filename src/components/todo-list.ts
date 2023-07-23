@@ -19,6 +19,12 @@ class TodoList extends LitElement {
      */
     onAddTodo(event: KeyboardEvent, id: string) {
         if (event.key === 'Enter') {
+            const inputValue = (event.target as HTMLInputElement).value
+
+            // Disallow blank text entry
+            // TODO: Actually add form validation
+            if (inputValue.length === 0) { return }
+
             const customEvent = new CustomEvent('create-new-todo', {
                 detail: {
                     id,
@@ -66,7 +72,7 @@ class TodoList extends LitElement {
                                             @keydown=${(event: KeyboardEvent) => this.onAddTodo(event, id)}
                                         />
                                         <button 
-                                            class="flex justify-center align-center items-center invisible border border-slate-300 rounded-md group-hover/item:visible pl-2 pr-2 bg-slate-300 hover:bg-slate-400 hover:text-white text-sm"
+                                            class="flex justify-center align-center items-center invisible border border-slate-300 rounded-md group-hover/item:visible pl-2 pr-2 bg-slate-300 hover:bg-red-600 hover:text-white text-sm"
                                             @click=${() => this.onRemoveTodo(id)}>
                                                 Remove
                                         </button>
@@ -78,7 +84,7 @@ class TodoList extends LitElement {
                             <li class="py-2 pr-2 pl-2 flex justify-between group/item hover:bg-slate-100 ${!isLastChild ? "border-b" : ""}" data-id="${todo.id}">
                                 ${todo.title}
                                 <button 
-                                    class="flex justify-center align-center items-center invisible border border-slate-300 rounded-md group-hover/item:visible pl-2 pr-2 bg-slate-300 hover:bg-slate-400 hover:text-white text-sm"
+                                    class="flex justify-center align-center items-center invisible border border-slate-300 rounded-md group-hover/item:visible pl-2 pr-2 bg-slate-300 hover:bg-red-600 hover:text-white text-sm"
                                     @click=${() => this.onRemoveTodo(id)}>
                                         Remove
                                 </button>
