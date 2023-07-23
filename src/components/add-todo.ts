@@ -8,10 +8,21 @@ import config from '../../twind.config'
 class AddTodo extends LitElement {
     @property() value = ""
 
+    addTodo() {
+        const customEvent = new CustomEvent('add-blank-todo', {
+            bubbles: true,
+            composed: true,
+        })
+
+        this.dispatchEvent(customEvent)
+    }
+
     override render() {
         return html`
                 <section class="flex justify-end font-sans border-t border-slate-500 pt-3">
-                    <button class="bg-slate-200 p-2 border border-slate-300 rounded-md text-sm hover:bg-slate-300">Create Todo</button>
+                    <button 
+                        class="bg-slate-200 p-2 border border-slate-300 rounded-md text-sm hover:bg-slate-300"
+                        @click=${this.addTodo}>Create Todo</button>
                 </section>
         `
     }
